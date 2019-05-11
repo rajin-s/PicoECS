@@ -69,16 +69,13 @@ end
 function _update()
     system_update(all_entities)
     commit_destroy()
-    if btn(5) then
-        printh("there are " .. #all_entities .. " entities")
-    end
 end
 
 function _draw()
     disable_camera()
     rectfill(0, 0, 127, 127, clear_color)
     enable_camera()
-    
+
     draw_map()
     system_draw(all_entities)
     commit_draw_queue()
