@@ -45,8 +45,11 @@ function load_room(room_id)
         local size   = current_room.room.size
         for ix = origin.x, origin.x + size.x do
             for iy = origin.y, origin.y + size.y do
+                local has_entity_tile = false
+                local tile_content = mget(ix, iy)
                 for id, template in pairs(entity_tiles) do
-                    if mget(ix, iy) == id then
+                    if tile_content == id then
+                        has_entity_tile = true
                         local entity_id = instantiate_entity(template)
                         local entity = all_entities[entity_id]
 
@@ -55,20 +58,35 @@ function load_room(room_id)
                             tile_id = id,
                             tile_position = vec2(ix, iy)
                         })
-
+                        
                         if has_component(entity, "position") then
                             set_component(entity_id, "position", vec2(ix * 8, iy * 8))
                         end
-
+                        
                         if has_component(entity, "sprite") then
                             mset(ix, iy, 0)
                         end
-
+                        
                         -- printh(
-                        --     "entity tile: @[" .. ix .. ", " .. iy .. "] (" .. id .. ") -> @[" ..
-                        --     all_entities[entity_id].position.x .. ", " .. all_entities[entity_id].position.y .. "] (" .. entity_id .. ")"
-                        -- )
+                            --     "entity tile: @[" .. ix .. ", " .. iy .. "] (" .. id .. ") -> @[" ..
+                            --     all_entities[entity_id].position.x .. ", " .. all_entities[entity_id].position.y .. "] (" .. entity_id .. ")"
+                            -- )
+                        -- break
                     end
+                end
+                printh(fget(tile_content, solid_tile_flag))
+                if fget(tile_content, solid_tile_flag) then
+                    local solid_entity = create_entity("wall")
+                    set_component(solid_entity, "position", vec2(ix * 8, iy * 8))
+                    set_component(solid_entity, "collider", vec2(8, 8))
+                    add_component(solid_entity, "solid")
+                    add_component(solid_entity, "static")
+                    set_component(solid_entity, "spawn_data", { 
+                        room = room_id,
+                        tile_id = id,
+                        tile_position = vec2(ix, iy)
+                    })
+                    printh("Create wall @[" .. ix*8 .. ", " .. iy*8 .. "]")
                 end
             end
         end
