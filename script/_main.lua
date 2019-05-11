@@ -80,4 +80,5 @@ function _draw()
     camera(camera_offset.x, camera_offset.y)
     draw_map()
     system_draw(all_entities)
+    commit_draw_queue()
 end

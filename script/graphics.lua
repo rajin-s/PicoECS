@@ -1,5 +1,19 @@
 --> global state
 camera_offset = vec2(-64, -64)
+draw_queue = { }
+
+function commit_draw_queue()
+    sort(
+        draw_queue,
+        function(a,b)
+            return a.position.y > b.position.y
+        end
+    )
+    for entity in all(draw_queue) do
+        spr(entity.sprite, entity.position.x, entity.position.y)
+    end
+    draw_queue = { }
+end
 
 --> component helpers
 function set_animation(entity_id, nframes, nrate)
@@ -36,7 +50,7 @@ end
 
 --> system functions
 function draw_sprite(entity)
-    spr(entity.sprite, entity.position.x, entity.position.y)
+    add(draw_queue, entity)
 end
 
 function animate_sprite(entity)
