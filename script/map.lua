@@ -55,7 +55,7 @@ function load_room(room_id)
 
                         set_component(entity_id, "spawn_data", { 
                             room = room_id,
-                            tile_id = id,
+                            tile_id = tile_content,
                             tile_position = vec2(ix, iy)
                         })
                         
@@ -83,7 +83,7 @@ function load_room(room_id)
                     add_component(solid_entity, "static")
                     set_component(solid_entity, "spawn_data", { 
                         room = room_id,
-                        tile_id = id,
+                        tile_id = tile_content,
                         tile_position = vec2(ix, iy)
                     })
                     printh("Create wall @[" .. ix*8 .. ", " .. iy*8 .. "]")
