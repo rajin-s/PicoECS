@@ -19,13 +19,20 @@ function _init()
     set_component(player, "movement", { speed=1, moving = false})
     add_component(player, "player")
     add_component(player, "sprite")
-    set_animation(player, {1,2,3}, 4)
+    -- set_animation(player, {1,2,3}, 4)
+    
+    add_component(player, "solid")
+    set_component(player, "collider", vec2(8, 8))
+
     set_traveler(player)
 
     add_entity_tile(129, {
         name = "torch",
         position = vec2(0, 0),
         sprite = 1,
+        solid = 1,
+        static = 1,
+        collider = vec2(8, 8),
         animation = create_animation({129,130,131}, 3)
     })
     add_entity_tile(255, {

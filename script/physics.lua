@@ -3,6 +3,9 @@
 --> velocity = vec2
 --> weight   = float (not used yet)
 --> drag     = float (percent reduction per frame)
+--> collider = vec2 (size)
+--> solid
+--> static
 
 --> system functions
 function apply_velocity(entity)
@@ -25,28 +28,50 @@ function apply_gravity(entity)
     entity.velocity.x += gravity_acceleration.x
 end
 
+--> resolve collisions between a and b as if b was static
+function resolve_collisions(entity)
+    for other_id, other_entity in pairs(all_entities) do
+        if other_entity ~= entity and 
+           has_component(other_entity, "position") and has_component(other_entity, "collider") and has_component(other_entity, "solid") then
+            local overlap = aabb_overlap(entity.position, entity.collider, other_entity.position, other_entity.collider)
+            if overlap then
+                entity.sprite = 2
+                entity.position.x += overlap.x
+                entity.position.y += overlap.y
+            else
+                entity.sprite = 3
+            end
+        end
+    end
+end
+
 --> create physics systems
 function init_physics()
     create_systems(systems, {
         {
             require = { "velocity", "drag" },
             exclude = { "frozen" },
-            action = drag_velocity
+            action  = drag_velocity
         },
         {
             require = { "position", "velocity", "weight" },
             exclude = { "frozen" },
-            action = apply_gravity
+            action  = apply_gravity
         },
         {
             require = { "position", "velocity" },
             exclude = { "frozen" },
-            action = apply_velocity
+            action  = apply_velocity
         },
         {
             require = { "position", "internal_velocity" },
             exclude = { "frozen" },
-            action = apply_internal_velocity
+            action  = apply_internal_velocity
         },
+        {
+            require = { "position", "collider", "solid" },
+            exclude = { "static" },
+            action  = resolve_collisions
+        }
     })
 end
