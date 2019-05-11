@@ -32,7 +32,11 @@ function _init()
         solid = 1,
         static = 1,
         collider = { size=vec2(4, 4), offset=vec2(2, 2) },
-        animation = create_animation({129,130,131}, 3)
+        animation = create_animation({129,130,131}, 3),
+        talker = { size=vec2(14, 14), lines = {
+            "it's a neat torch!",
+            "how nice."
+        }}
     })
     add_entity_tile(255, {
         name = "to room 1",
