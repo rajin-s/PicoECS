@@ -3,7 +3,7 @@
 --> velocity = vec2
 --> weight   = float (not used yet)
 --> drag     = float (percent reduction per frame)
---> collider = vec2 (size)
+--> collider = { size, offset }
 --> solid
 --> static
 
@@ -32,8 +32,11 @@ end
 function resolve_collisions(entity)
     for other_id, other_entity in pairs(all_entities) do
         if other_entity ~= entity and 
-           has_component(other_entity, "position") and has_component(other_entity, "collider") and has_component(other_entity, "solid") then
-            local overlap = aabb_overlap(entity.position, entity.collider, other_entity.position, other_entity.collider)
+         has_component(other_entity, "position") and has_component(other_entity, "collider") and has_component(other_entity, "solid") then
+            local overlap = aabb_overlap(
+                add2(entity.position, entity.collider.offset), entity.collider.size,
+                add2(other_entity.position, other_entity.collider.offset), other_entity.collider.size
+            )
             if overlap then
                 entity.sprite = 2
                 entity.position.x += overlap.x

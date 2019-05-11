@@ -22,7 +22,7 @@ function _init()
     -- set_animation(player, {1,2,3}, 4)
     
     add_component(player, "solid")
-    set_component(player, "collider", vec2(8, 8))
+    set_component(player, "collider", { size=vec2(6, 6), offset=vec2(1, 1) })
 
     set_traveler(player)
 
@@ -32,7 +32,7 @@ function _init()
         sprite = 1,
         solid = 1,
         static = 1,
-        collider = vec2(8, 8),
+        collider = { size=vec2(4, 4), offset=vec2(2, 2) },
         animation = create_animation({129,130,131}, 3)
     })
     add_entity_tile(255, {

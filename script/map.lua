@@ -74,11 +74,10 @@ function load_room(room_id)
                         -- break
                     end
                 end
-                printh(fget(tile_content, solid_tile_flag))
-                if fget(tile_content, solid_tile_flag) then
+                if not has_entity_tile and fget(tile_content, solid_tile_flag) then
                     local solid_entity = create_entity("wall")
                     set_component(solid_entity, "position", vec2(ix * 8, iy * 8))
-                    set_component(solid_entity, "collider", vec2(8, 8))
+                    set_component(solid_entity, "collider", { size=vec2(8, 8), offset=vec2(0, 0) })
                     add_component(solid_entity, "solid")
                     add_component(solid_entity, "static")
                     set_component(solid_entity, "spawn_data", { 
@@ -86,7 +85,7 @@ function load_room(room_id)
                         tile_id = tile_content,
                         tile_position = vec2(ix, iy)
                     })
-                    printh("Create wall @[" .. ix*8 .. ", " .. iy*8 .. "]")
+                    -- printh("Create wall @[" .. ix*8 .. ", " .. iy*8 .. "]")
                 end
             end
         end
