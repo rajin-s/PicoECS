@@ -19,7 +19,7 @@ function _init()
     set_component(player, "movement", { speed=1, moving = false})
     add_component(player, "player")
     add_component(player, "sprite")
-    -- set_animation(player, {1,2,3}, 4)
+    set_animation(player, {1,2,3}, 4)
     
     add_component(player, "solid")
     set_component(player, "collider", { size=vec2(6, 6), offset=vec2(1, 1) })
