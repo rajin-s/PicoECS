@@ -11,3 +11,4 @@ A simple ECS Framework for Pico8, made for the GD@IU May 2019 Weekend Jam
 
 ## To Do
 - Add audio / music support to the build scipt
+- Add generic batch/bash scripts for building
