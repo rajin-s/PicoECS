@@ -6,8 +6,7 @@ projects = [f for f in listdir(".") if isfile(f) and f.endswith(".pp8")]
 print(projects)
 
 include_pattern = re.compile(r"#include (.*)")
-include_gfx_pattern = re.compile(r"#include-gfx (.*)")
-include_map_pattern = re.compile(r"#include-map (.*)")
+include_section_pattern = re.compile(r"#include (.*) from (.*)")
 
 def copy_section(path, section, ofile):
     ifile = open(path, 'r')
@@ -56,21 +55,18 @@ for proj in projects:
     lines = pfile.readlines()
     n = 1
     for line in lines:
+        # Check for include scripts
         m = include_pattern.match(line)
         if m == None:
-            m = include_gfx_pattern.match(line)
+            # Check for include sections
+            m = include_section_pattern.match(line)
             if m == None:
-                m = include_map_pattern.match(line)
-                if m == None:
-                    ofile.write(line)
-                else:
-                    # Include Map from project
-                    ipath = m.group(1)
-                    copy_section(ipath, "map", ofile)
+                ofile.write(line)
             else:
                 # Include gfx from project
-                ipath = m.group(1)
-                copy_section(ipath, "gfx", ofile)
+                ipath = m.group(2)
+                section = m.group(1)
+                copy_section(ipath, section, ofile)
         else:
             # Include script from project
             ipath = m.group(1)

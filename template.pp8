@@ -4,7 +4,10 @@ __lua__
 #include script
 
 __gfx__
-#include-gfx gfx.p8
+#include gfx from gfx.p8
+
+__gff__
+#include gff from gfx.p8
 
 __map__
-#include-map gfx.p8
+#include map from gfx.p8
