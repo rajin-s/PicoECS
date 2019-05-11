@@ -13,6 +13,7 @@ def copy_section(path, section, ofile):
     ilines = ifile.readlines()
     ifile.close()
     copy = False
+    ofile.write("__%s__\n" % section)
     for iline in ilines:
         if iline.startswith("__%s" % section):
             copy = True
@@ -55,22 +56,22 @@ for proj in projects:
     lines = pfile.readlines()
     n = 1
     for line in lines:
-        # Check for include scripts
-        m = include_pattern.match(line)
+        # Check for include sections
+        m = include_section_pattern.match(line)
         if m == None:
-            # Check for include sections
-            m = include_section_pattern.match(line)
+            # Check for include scripts
+            m = include_pattern.match(line)
             if m == None:
                 ofile.write(line)
             else:
-                # Include gfx from project
-                ipath = m.group(2)
-                section = m.group(1)
-                copy_section(ipath, section, ofile)
+                # Include script from project
+                ipath = m.group(1)
+                copy_script(ipath, ofile)
         else:
-            # Include script from project
-            ipath = m.group(1)
-            copy_script(ipath, ofile)
+            # Include section from project
+            ipath = m.group(2)
+            section = m.group(1)
+            copy_section(ipath, section, ofile)
     
     pfile.close()
     ofile.close()
