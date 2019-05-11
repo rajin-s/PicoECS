@@ -133,7 +133,6 @@ function track_traveler(entity)
             load_room(entity.room_transition.target)
         end
     end
-
 end
 
 --> create systems
