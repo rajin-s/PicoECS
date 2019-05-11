@@ -38,11 +38,8 @@ function resolve_collisions(entity)
                 add2(other_entity.position, other_entity.collider.offset), other_entity.collider.size
             )
             if overlap then
-                entity.sprite = 2
                 entity.position.x += overlap.x
                 entity.position.y += overlap.y
-            else
-                entity.sprite = 3
             end
         end
     end
