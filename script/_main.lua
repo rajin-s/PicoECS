@@ -15,12 +15,11 @@ function _init()
     -- })
     local player = create_entity(player)
     set_component(player, "position", vec2(4, 4))
+    add_component(player, "sprite")
+    set_animation(player, {1,2,3}, 4)
     set_component(player, "internal_velocity", vec2(4, 4))
     set_component(player, "movement", { speed=1, moving = false})
     add_component(player, "player")
-    add_component(player, "sprite")
-    set_animation(player, {1,2,3}, 4)
-    
     add_component(player, "solid")
     set_component(player, "collider", { size=vec2(6, 6), offset=vec2(1, 1) })
 
@@ -57,6 +56,7 @@ function _init()
     init_physics()
     init_graphics()
     init_map()
+    init_dialogue()
 
     --> report results
     printh("there are " .. #all_entities .. " entities")
@@ -75,9 +75,10 @@ function _update()
 end
 
 function _draw()
-    camera(0, 0)
+    disable_camera()
     rectfill(0, 0, 127, 127, clear_color)
-    camera(camera_offset.x, camera_offset.y)
+    enable_camera()
+    
     draw_map()
     system_draw(all_entities)
     commit_draw_queue()

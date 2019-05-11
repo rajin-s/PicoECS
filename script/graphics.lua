@@ -2,6 +2,13 @@
 camera_offset = vec2(-64, -64)
 draw_queue = { }
 
+function enable_camera()
+    camera(camera_offset.x, camera_offset.y)
+end
+function disable_camera()
+    camera(0, 0)
+end
+
 function commit_draw_queue()
     sort(
         draw_queue,
