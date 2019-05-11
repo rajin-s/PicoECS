@@ -6,6 +6,13 @@ function vec3(nx, ny, nz)
     return { x=nx, y=ny, z=nz }
 end
 
+function add2(a, b)
+    return { x=a.x+b.x, y=a.y+b.y }
+end
+function add3(a, b)
+    return { x=a.x+b.x, y=a.y+b.y, z=a.z+b.z }
+end
+
 function lerp(from, to, percent)
     return from + (to - from) * percent
 end
