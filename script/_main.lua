@@ -13,6 +13,7 @@ function _init()
     --     sprite = 1,
     --     animation = create_animation({1,2,3,4}, 4)
     -- })
+    
     local player = create_entity(player)
     set_component(player, "position", vec2(4, 4))
     add_component(player, "sprite")
