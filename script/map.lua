@@ -14,7 +14,6 @@ function add_room(room_info)
 end
 
 function add_entity_tile(tile_id, entity_template)
-    -- add(entity_tiles, { id=tile_id, template=entity_template })
     entity_tiles[tile_id] = entity_template
 end
 
@@ -27,8 +26,10 @@ function set_traveler(entity_id)
     end
 end
 
+--> set current global state and load entities from tiles
 function load_room(room_id)
     printh("load room #" .. room_id)
+    
     --> remove entities belonging to the current room
     if current_room == nil then
         printh("load first room")
@@ -120,6 +121,7 @@ function load_room(room_id)
     end
 end
 
+--> map drawing functions
 function draw_map(layer_type)
     if current_room ~= nil then
         for i, ltype in pairs(current_room.room.layers) do
@@ -139,7 +141,7 @@ function draw_map(layer_type)
     end
 end
 
---> system functions
+--> map system functions
 function track_traveler(entity)
     if current_traveler == nil then return
     else

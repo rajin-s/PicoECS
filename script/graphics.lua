@@ -1,3 +1,10 @@
+--> gfx draw order
+-->   map background layers  -> draw_map("bg")
+-->   normal entities        -> gfx_systems
+-->   map foreground layers  -> draw_map("fg")
+-->   foreground entities    -> gfx_front_systems
+-->   overlay entities       -> gfx_overlay systems
+
 --> global state
 camera_offset = vec2(-64, -64)
 draw_queue = { }
