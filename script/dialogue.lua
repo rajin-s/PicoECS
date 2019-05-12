@@ -138,7 +138,7 @@ function init_dialogue()
         transition_rate = 0.3,
         rate = 1,
         height = 19,
-        background = 0,
+        background = 1,
         foreground = 6,
     })
     set_component(dialogue, "text", { 
