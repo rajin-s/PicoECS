@@ -18,6 +18,14 @@ function _init()
     set_component(player, "position", vec2(4, 4))
     add_component(player, "sprite")
     set_animation(player, {1,2,3,4}, 4)
+    set_component(player, "directional", {
+        down = {1,2,3,4},
+        right = {5,6,7,8},
+        up = {9,10,11,12},
+        facing = "down",
+        idle_rate = 4,
+        move_rate = 2
+    })
     set_component(player, "internal_velocity", vec2(4, 4))
     set_component(player, "movement", { speed=1, moving = false})
     add_component(player, "player")
@@ -84,6 +92,12 @@ function _init()
             size=vec2(12, 12),
             lines= { "hi! i'm a flower :)" }
         }
+    })
+    add_entity_tile(247, {
+        name = "grass",
+        position = vec2(0, 0),
+        sprite = 247,
+        animation = create_animation({247,248,249,248}, 8),
     })
 
     add_entity_tile(16, {

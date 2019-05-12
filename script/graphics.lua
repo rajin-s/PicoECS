@@ -24,7 +24,11 @@ function commit_draw_queue()
         end
     )
     for entity in all(draw_queue) do
-        spr(entity.sprite, entity.position.x, entity.position.y)
+        if entity.flipped then
+            spr(entity.sprite, entity.position.x, entity.position.y, 1, 1, true)
+        else
+            spr(entity.sprite, entity.position.x, entity.position.y)
+        end
     end
     draw_queue = { }
 end
