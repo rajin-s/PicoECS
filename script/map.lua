@@ -124,27 +124,16 @@ end
 --> map drawing functions
 function draw_map(layer_type, z_scale_factor)
     if current_room ~= nil then
-        local drawn = 0
         for i, ltype in pairs(current_room.room.layers) do
-            drawn += 1
             local origin = current_room.room.origin
             local size = current_room.room.size
-            local offset = vec2(0, 0)
-
-            if current_traveler ~= nil then
-                offset.x = (origin.x + size.x / 2) * 8 - (current_traveler.position.x + 4)
-                offset.y = (origin.y + size.y / 2) * 8 - (current_traveler.position.y + 4)
-
-                offset.x *= z_scale_factor * drawn
-                offset.y *= z_scale_factor * drawn
-            end
 
             if ltype == layer_type then
                 map(
                     --> cell start (taking layers into account)
                     origin.x, origin.y + (i - 1) * size.y,
                     --> screen start
-                    origin.x * 8 + offset.x, origin.y * 8 + offset.y,
+                    origin.x * 8, origin.y,
                     --> cell count
                     size.x, size.y
                 )
