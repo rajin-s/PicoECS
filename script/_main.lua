@@ -65,7 +65,7 @@ function _init()
     })
     
     create_rooms()
-    load_room(1)
+    load_room(2)
 
     --> initialize systems
     init_gameplay()
