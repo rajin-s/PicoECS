@@ -51,24 +51,29 @@ function load_room(room_id)
                     local tile_content = mget(ix, ry)
                     for id, template in pairs(entity_tiles) do
                         if tile_content == id then
+                            --> create entity from tile
                             has_entity_tile = true
                             local entity_id = instantiate_entity(template)
                             local entity = all_entities[entity_id]
 
+                            --> set spawn data
                             set_component(entity_id, "spawn_data", { 
                                 room = room_id,
                                 tile_id = tile_content,
                                 tile_position = vec2(ix, ry)
                             })
                             
+                            --> set position
                             if has_component(entity, "position") then
                                 set_component(entity_id, "position", vec2(ix * 8, iy * 8))
                             end
                             
+                            --> remove tile if the entity has a sprite of its own
                             if has_component(entity, "sprite") then
                                 mset(ix, ry, 0)
                             end
 
+                            --> mark entities from foreground layers
                             if current_room.room.layers[il] == "fg" then
                                 add_component(entity_id, "foreground")
                             end
@@ -81,6 +86,7 @@ function load_room(room_id)
                         end
                     end
                     if not has_entity_tile and fget(tile_content, solid_tile_flag) then
+                        --> create invisible collision object at tile
                         local solid_entity = create_entity("wall")
                         set_component(solid_entity, "position", vec2(ix * 8, iy * 8))
                         set_component(solid_entity, "collider", { size=vec2(8, 8), offset=vec2(0, 0) })
@@ -132,8 +138,6 @@ function draw_map(layer_type)
         end
     end
 end
-
---> component helpers
 
 --> system functions
 function track_traveler(entity)
