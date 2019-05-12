@@ -83,6 +83,14 @@ function init_graphics()
         },
         {
             require = { "position", "sprite" },
+            exclude = { "hidden", "foreground" },
+            action = draw_sprite
+        },
+    })
+    
+    create_systems(gfx_front_systems, {
+        {
+            require = { "position", "sprite", "foreground" },
             exclude = { "hidden" },
             action = draw_sprite
         },

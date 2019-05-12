@@ -5,6 +5,8 @@ function report_entity(entity) printh(entity.name) end
 --> global system collections
 systems = { }
 gfx_systems = { }
+gfx_front_systems = { }
+gfx_overlay_systems = { }
 
 --> called from system scripts (physics, graphics, gameplay, etc.)
 function create_system(collection, nsystem)
@@ -37,22 +39,11 @@ function check_system(system, entity)
     return true
 end
 
---> called in _update
-function system_update(entities)
-    for system in all(systems) do
+--> called all systems in a collection on a set of entities
+function call_systems(collection, entities)
+    for system in all(collection) do
         for id, entity in pairs(entities) do
             if check_system(system, entity) then
-                system.action(entity)
-            end
-        end
-    end
-end
-
---> called in _draw
-function system_draw(entities)
-    for system in all(gfx_systems) do
-        for id, entity in pairs(entities) do
-            if check_system(system, entity) then 
                 system.action(entity)
             end
         end

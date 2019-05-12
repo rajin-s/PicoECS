@@ -157,7 +157,7 @@ function init_dialogue()
             action  = track_traveler_dialogue  
         }
     })
-    create_systems(gfx_systems, {
+    create_systems(gfx_overlay_systems, {
         {
             require = { "textbox", "text" },
             exclude = { },

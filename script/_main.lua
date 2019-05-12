@@ -83,16 +83,30 @@ function _init()
 end
 
 function _update()
-    system_update(all_entities)
+    call_systems(systems, all_entities)
     commit_destroy()
 end
 
 function _draw()
+    --> clear screen
     disable_camera()
     rectfill(0, 0, 127, 127, clear_color)
     enable_camera()
 
-    draw_map()
-    system_draw(all_entities)
+    --> draw background
+    draw_map("bg")
+    
+    --> draw entities
+    call_systems(gfx_systems, all_entities)
     commit_draw_queue()
+    
+    --> draw foreground
+    draw_map("fg")
+
+    --> draw foreground entities
+    call_systems(gfx_front_systems, all_entities)
+    commit_draw_queue()
+
+    --> draw UI and other overlay elements
+    call_systems(gfx_overlay_systems, all_entities)
 end
