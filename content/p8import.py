@@ -58,18 +58,24 @@ class map_section:
 
     def condense(self):
         final_layers = [self.layers[0]]
+        final_types  = [self.types[0]]
 
         # print("start @ %d layers" % len(self.layers))
-        for layer in self.layers[1:]:
+        for i in range(1, len(self.layers)):
+            layer = self.layers[i]
+            ltype = self.types[i]
+
             for iy in range(0, self.height):
                 for ix in range(0, self.width):
                     lv  =  layer[iy][ix]
                     if lv == "00": continue
                     
                     placed = False
-                    for flayer in final_layers:
+                    for fli in range(len(final_layers)):
+                        flayer = final_layers[fli]
+                        fltype = final_types[fli]
                         flv = flayer[iy][ix]
-                        if flv == "00":
+                        if flv == "00" and fltype == ltype:
                             flayer[iy][ix] = lv
                             placed = True
                             break
@@ -82,6 +88,7 @@ class map_section:
                             nlayer.append(nrow)
                         nlayer[iy][ix] = lv
                         final_layers.append(nlayer)
+                        final_types.append(ltype)
         
         self.layers = final_layers
         # print("end @ %d layers" % len(self.layers))
