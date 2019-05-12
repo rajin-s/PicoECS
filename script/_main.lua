@@ -65,7 +65,7 @@ function _init()
     })
     
     create_rooms()
-    load_room(2)
+    load_room(3)
 
     --> initialize systems
     init_gameplay()
@@ -94,14 +94,15 @@ function _draw()
     enable_camera()
 
     --> draw background
-    draw_map("bg")
+    draw_map("bg", 0)
     
     --> draw entities
     call_systems(gfx_systems, all_entities)
     commit_draw_queue()
     
     --> draw foreground
-    draw_map("fg")
+    draw_map("fg", 0.05)
+    draw_map("fg", 0.1)
 
     --> draw foreground entities
     call_systems(gfx_front_systems, all_entities)
