@@ -47,9 +47,9 @@ function load_room(room_id)
         for ix = origin.x, origin.x + size.x do
             for iy = origin.y, origin.y + size.y do
                 for il = 1, #current_room.room.layers do
-                    local ry = iy + current_room.room.size.y * (il - 1)
+                    local rx = ix + current_room.room.size.x * (il - 1)
                     local has_entity_tile = false
-                    local tile_content = mget(ix, ry)
+                    local tile_content = mget(rx, iy)
                     for id, template in pairs(entity_tiles) do
                         if tile_content == id then
                             --> create entity from tile
@@ -61,17 +61,23 @@ function load_room(room_id)
                             set_component(entity_id, "spawn_data", { 
                                 room = room_id,
                                 tile_id = tile_content,
-                                tile_position = vec2(ix, ry)
+                                tile_position = vec2(rx, iy)
                             })
                             
                             --> set position
                             if has_component(entity, "position") then
                                 set_component(entity_id, "position", vec2(ix * 8, iy * 8))
                             end
+
+                            --> randomize animation frame
+                            if has_component(entity, "animation") then
+                                entity.animation.frame = flr(rnd(#entity.animation.frames))
+                                entity.animation.t = flr(rnd(entity.animation.rate))
+                            end
                             
                             --> remove tile if the entity has a sprite of its own
                             if has_component(entity, "sprite") then
-                                mset(ix, ry, 0)
+                                mset(rx, iy, 0)
                             end
 
                             --> mark entities from foreground layers
@@ -96,7 +102,7 @@ function load_room(room_id)
                         set_component(solid_entity, "spawn_data", { 
                             room = room_id,
                             tile_id = tile_content,
-                            tile_position = vec2(ix, ry)
+                            tile_position = vec2(rx, iy)
                         })
                         -- printh("Create wall @[" .. ix*8 .. ", " .. iy*8 .. "]")
                     end
@@ -131,7 +137,7 @@ function draw_map(layer_type, z_scale_factor)
             if ltype == layer_type then
                 map(
                     --> cell start (taking layers into account)
-                    origin.x, origin.y + (i - 1) * size.y,
+                    origin.x + (i - 1) * size.x, origin.y,
                     --> screen start
                     origin.x * 8, origin.y,
                     --> cell count

@@ -94,7 +94,7 @@ class map_section:
         # print("end @ %d layers" % len(self.layers))
     
     def get_size(self):
-        return (self.width, self.height * len(self.layers))
+        return (self.width * len(self.layers), self.height)
 
 sourcedir = sys.argv[1]
 dest = sys.argv[2]
@@ -159,8 +159,8 @@ for room in rooms:
     for iy in range(room.y, room.y + room.height):
         for ix in range(room.x, room.x + room.width):
             for il in range(0, len(room.layers)):
-                wy = iy + room.height * il
-                out[wy][ix] = room.layers[il][iy - room.y][ix - room.x]
+                wx = ix + room.width * il
+                out[iy][wx] = room.layers[il][iy - room.y][ix - room.x]
 
 text = ""
 for row in out:
