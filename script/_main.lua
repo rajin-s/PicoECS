@@ -64,8 +64,7 @@ function _init()
         sprite = 0
     })
     
-    add_room(vec2(0, 0), vec2(8, 8))
-    add_room(vec2(7, 0), vec2(11, 8))
+    create_rooms()
     load_room(1)
 
     --> initialize systems

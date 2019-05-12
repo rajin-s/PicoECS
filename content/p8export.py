@@ -40,7 +40,7 @@ for arg in sys.argv:
             break
         elif read:
             row = []
-            for c in line[:-2]:
+            for c in line[:-1]:
                 row.append(colors[c])
             pixels.append(row)
 

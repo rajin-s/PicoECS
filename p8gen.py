@@ -7,6 +7,7 @@ print(projects)
 
 include_pattern = re.compile(r"#include (.*)")
 include_section_pattern = re.compile(r"#include (.*) from (.*)")
+include_raw_pattern = re.compile(r"#include (.*) raw (.*)")
 
 def copy_section(path, section, ofile):
     ifile = open(path, 'r')
@@ -21,6 +22,15 @@ def copy_section(path, section, ofile):
             copy = False
         elif copy:
             ofile.write(iline)
+    ofile.write("\n")
+
+def copy_section_raw(path, section, ofile):
+    ifile = open(path, 'r')
+    ilines = ifile.readlines()
+    ifile.close()
+    ofile.write("__%s__\n" % section)
+    for iline in ilines:
+        ofile.write(iline)
     ofile.write("\n")
 
 _first_script = True
@@ -59,14 +69,21 @@ for proj in projects:
         # Check for include sections
         m = include_section_pattern.match(line)
         if m == None:
-            # Check for include scripts
-            m = include_pattern.match(line)
+            m = include_raw_pattern.match(line)
             if m == None:
-                ofile.write(line)
+                # Check for include scripts
+                m = include_pattern.match(line)
+                if m == None:
+                    ofile.write(line)
+                else:
+                    # Include script from project
+                    ipath = m.group(1)
+                    copy_script(ipath, ofile)
             else:
-                # Include script from project
-                ipath = m.group(1)
-                copy_script(ipath, ofile)
+                # Include raw file as section
+                ipath = m.group(2)
+                section = m.group(1)
+                copy_section_raw(ipath, section, ofile)
         else:
             # Include section from project
             ipath = m.group(2)

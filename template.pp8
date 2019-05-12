@@ -3,8 +3,8 @@ version 16
 __lua__
 #include script
 
-#include gfx from content.p8
+#include gfx from content/content.p8
 
-#include gff from content.p8
+#include gff from content/content.p8
 
-#include map from content.p8
+#include map raw content/map.p8map
