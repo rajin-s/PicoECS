@@ -44,8 +44,11 @@ function load_room(room_id)
         current_room = { id = room_id, room = all_rooms[room_id] }
         local origin = current_room.room.origin
         local size   = current_room.room.size
+        local pixel_origin = vec2((16 - size.x) * 4, (16 - size.y) * 4)
+
         for ix = origin.x, origin.x + size.x do
             for iy = origin.y, origin.y + size.y do
+                local cell_offset = vec2((ix - origin.x) * 8, (iy - origin.y) * 8) --> pixel offset from room origin
                 for il = 1, #current_room.room.layers do
                     local rx = ix + current_room.room.size.x * (il - 1)
                     local has_entity_tile = false
@@ -66,7 +69,7 @@ function load_room(room_id)
                             
                             --> set position
                             if has_component(entity, "position") then
-                                set_component(entity_id, "position", vec2(ix * 8, iy * 8))
+                                set_component(entity_id, "position", add2(pixel_origin, cell_offset))
                             end
 
                             --> randomize animation frame
@@ -95,7 +98,7 @@ function load_room(room_id)
                     if not has_entity_tile and fget(tile_content, solid_tile_flag) then
                         --> create invisible collision object at tile
                         local solid_entity = create_entity("wall")
-                        set_component(solid_entity, "position", vec2(ix * 8, iy * 8))
+                        set_component(solid_entity, "position", add2(pixel_origin, cell_offset))
                         set_component(solid_entity, "collider", { size=vec2(8, 8), offset=vec2(0, 0) })
                         add_component(solid_entity, "solid")
                         add_component(solid_entity, "static")
@@ -110,18 +113,18 @@ function load_room(room_id)
             end
         end
         
-        local pixel_size = vec2(
-            current_room.room.size.x * 8,
-            current_room.room.size.y * 8
-        )
-        local pixel_origin = vec2(
-            current_room.room.origin.x * 8,
-            current_room.room.origin.y * 8
-        )
-        camera_offset = vec2(
-            pixel_origin.x - 64 + pixel_size.x / 2,
-            pixel_origin.y - 64 + pixel_size.y / 2 
-        )
+        -- local pixel_size = vec2(
+        --     current_room.room.size.x * 8,
+        --     current_room.room.size.y * 8
+        -- )
+        -- local pixel_origin = vec2(
+        --     current_room.room.origin.x * 8,
+        --     current_room.room.origin.y * 8
+        -- )
+        -- camera_offset = vec2(
+        --     pixel_origin.x - 64 + pixel_size.x / 2,
+        --     pixel_origin.y - 64 + pixel_size.y / 2 
+        -- )
     else
         printh("bad room id #" .. room_id .. "!")
     end
@@ -139,7 +142,7 @@ function draw_map(layer_type, z_scale_factor)
                     --> cell start (taking layers into account)
                     origin.x + (i - 1) * size.x, origin.y,
                     --> screen start
-                    origin.x * 8, origin.y,
+                    (16 - size.x) * 4, (16 - size.y) * 4,
                     --> cell count
                     size.x, size.y
                 )
@@ -149,7 +152,12 @@ function draw_map(layer_type, z_scale_factor)
 end
 
 --> map system functions
+ttf = 0
 function track_traveler(entity)
+    if ttf ~= 0 then
+        ttf = (ttf + 1) % 3
+        return
+    end
     if current_traveler == nil then return
     else
         local traveler_position = vec2(
@@ -157,9 +165,14 @@ function track_traveler(entity)
             current_traveler.position.y + 4
         )
         if point_in_aabb(traveler_position, entity.position, entity.room_transition.size) then
-            current_traveler.position.x = entity.room_transition.exit.x * 8
-            current_traveler.position.y = entity.room_transition.exit.y * 8
-            load_room(entity.room_transition.target)
+            -- current_traveler.position.x = entity.room_transition.exit.x * 8
+            -- current_traveler.position.y = entity.room_transition.exit.y * 8
+            load_room(current_room.id + entity.room_transition.target)
+
+            if btn(0) then current_traveler.position.x = 128 - 16 end --> left
+            if btn(1) then current_traveler.position.x = 16 end --> right
+            if btn(2) then current_traveler.position.y = 128 - 16 end --> up
+            if btn(3) then current_traveler.position.y = 16 end --> down
         end
     end
 end

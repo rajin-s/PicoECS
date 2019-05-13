@@ -8,3 +8,7 @@ __lua__
 #include gff from content/content.p8
 
 #include map raw content/map.p8map
+
+#include sfx from content/content.p8
+
+#include music from content/content.p8

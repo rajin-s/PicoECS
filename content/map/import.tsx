@@ -4,6 +4,7 @@
  <terraintypes>
   <terrain name="Dirt" tile="193"/>
   <terrain name="Grass" tile="215"/>
+  <terrain name="Raised" tile="232"/>
  </terraintypes>
  <tile id="192" terrain=",,,0"/>
  <tile id="193" terrain=",,0,0"/>
@@ -13,6 +14,11 @@
  <tile id="197" terrain=",,,1"/>
  <tile id="198" terrain=",,1,1"/>
  <tile id="199" terrain=",,1,"/>
+ <tile id="200" terrain=",,,2"/>
+ <tile id="201" terrain=",,2,2"/>
+ <tile id="202" terrain=",,2,"/>
+ <tile id="203" terrain="2,2,2,"/>
+ <tile id="204" terrain="2,2,,2"/>
  <tile id="208" terrain=",0,,0"/>
  <tile id="209" terrain="0,0,0,0"/>
  <tile id="210" terrain="0,,0,"/>
@@ -21,6 +27,11 @@
  <tile id="213" terrain=",1,,1"/>
  <tile id="214" terrain="1,1,1,1"/>
  <tile id="215" terrain="1,,1,"/>
+ <tile id="216" terrain=",2,,2"/>
+ <tile id="217" terrain="2,2,2,2"/>
+ <tile id="218" terrain="2,,2,"/>
+ <tile id="219" terrain="2,,2,2"/>
+ <tile id="220" terrain=",2,2,2"/>
  <tile id="224" terrain=",0,,"/>
  <tile id="225" terrain="0,0,,"/>
  <tile id="226" terrain="0,,,"/>
@@ -29,6 +40,9 @@
  <tile id="229" terrain=",1,,"/>
  <tile id="230" terrain="1,1,,"/>
  <tile id="231" terrain="1,,,"/>
+ <tile id="232" terrain=",2,,"/>
+ <tile id="233" terrain="2,2,,"/>
+ <tile id="234" terrain="2,,,"/>
  <tile id="243" terrain="1,,1,1"/>
  <tile id="244" terrain=",1,1,1"/>
 </tileset>

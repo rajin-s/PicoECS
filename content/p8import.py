@@ -135,7 +135,7 @@ for room in rooms:
     sz = room.get_size()
     for sec in fmap:
         if sec.can_fit(sz[0], sz[1]):
-            split = sec.insert(room.width, room.height)
+            split = sec.insert(sz[0], sz[1])
             room.x, room.y = sec.x, sec.y
             fmap.remove(sec)
             fmap += split

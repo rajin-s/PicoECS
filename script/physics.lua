@@ -30,9 +30,8 @@ end
 
 --> resolve collisions between a and b as if b was static
 function resolve_collisions(entity)
-    for other_id, other_entity in pairs(all_entities) do
-        if other_entity ~= entity and 
-         has_component(other_entity, "position") and has_component(other_entity, "collider") and has_component(other_entity, "solid") then
+    for other_entity in all(component_lists["solid"]) do
+        if other_entity ~= entity then
             local overlap = aabb_overlap(
                 add2(entity.position, entity.collider.offset), entity.collider.size,
                 add2(other_entity.position, other_entity.collider.offset), other_entity.collider.size
@@ -43,6 +42,19 @@ function resolve_collisions(entity)
             end
         end
     end
+    -- for other_id, other_entity in pairs(all_entities) do
+    --     if other_entity ~= entity and
+    --        has_component(other_entity, "position") and has_component(other_entity, "collider") and has_component(other_entity, "solid") then
+    --         local overlap = aabb_overlap(
+    --             add2(entity.position, entity.collider.offset), entity.collider.size,
+    --             add2(other_entity.position, other_entity.collider.offset), other_entity.collider.size
+    --         )
+    --         if overlap then
+    --             entity.position.x += overlap.x
+    --             entity.position.y += overlap.y
+    --         end
+    --     end
+    -- end
 end
 
 --> create physics systems

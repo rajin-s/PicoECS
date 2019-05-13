@@ -6,7 +6,7 @@
 -->   overlay entities       -> gfx_overlay systems
 
 --> global state
-camera_offset = vec2(-64, -64)
+camera_offset = vec2(0, 0)
 draw_queue = { }
 
 function enable_camera()

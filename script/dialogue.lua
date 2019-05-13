@@ -63,6 +63,7 @@ function update_textbox(entity)
             if entity.textbox.chars ~= #line then
                 entity.textbox.chars += 1
                 entity.textbox.display = sub(line, 1, entity.textbox.chars)
+                sfx(34, -1, flr(rnd(31)), 1)
             end
         else
             entity.textbox.t += 1

@@ -14,7 +14,7 @@ function _init()
     --     animation = create_animation({1,2,3,4}, 4)
     -- })
     
-    local player = create_entity(player)
+    local player = create_entity("player")
     set_component(player, "position", vec2(4, 4))
     add_component(player, "sprite")
     set_animation(player, {1,2,3,4}, 4)
@@ -34,96 +34,7 @@ function _init()
 
     set_traveler(player)
 
-    add_entity_tile(128, {
-        name = "clover",
-        position = vec2(0, 0),
-        sprite = 1,
-        animation = create_animation({128,143}, 4),
-        talker = {
-            size=vec2(12, 12),
-            lines= { "feelin' lucky, punk? >:(" }
-        }
-    })
-    
-    add_entity_tile(156, {
-        name = "root",
-        position = vec2(0, 0),
-        collider = { size=vec2(6, 6), offset=vec2(1, -1) },
-        static = 1,
-        solid = 1
-    })
-    
-    add_entity_tile(131, {
-        name = "plantpart",
-        position = vec2(0, 0),
-        sprite = 131,
-        foreground = 1,
-        animation = create_animation({131,141,173,141}, 8),
-    })
-    add_entity_tile(132, {
-        name = "plantpart",
-        position = vec2(0, 0),
-        sprite = 132,
-        foreground = 1,
-        animation = create_animation({132,142,174,142}, 8),
-    })
-    add_entity_tile(147, {
-        name = "plantpart",
-        position = vec2(0, 0),
-        sprite = 147,
-        collider = { size=vec2(6,6), offset=vec2(5, 0)},
-        solid = 1,
-        static = 1,
-        animation = create_animation({147,157,189,157}, 8),
-    })
-    add_entity_tile(148, {
-        name = "plantpart",
-        position = vec2(0, 0),
-        sprite = 148,
-        animation = create_animation({148,158,190,158}, 8),
-    })
-    
-    add_entity_tile(245, {
-        name = "flower",
-        position = vec2(0, 0),
-        sprite = 245,
-        animation = create_animation({245,246}, 6),
-        talker = {
-            size=vec2(12, 12),
-            lines= { "hi! i'm a flower :)" }
-        }
-    })
-    add_entity_tile(247, {
-        name = "grass",
-        position = vec2(0, 0),
-        sprite = 247,
-        animation = create_animation({247,248,249,248}, 8),
-    })
-
-    add_entity_tile(16, {
-        name = "guy",
-        position = vec2(0, 0),
-        sprite = 16,
-        solid = 1,
-        static = 1,
-        collider = { size=vec2(4, 4), offset=vec2(2, 2) },
-        talker = { size=vec2(14, 14), lines = {
-            "how's it going?",
-            "that's good to hear!"
-        }}
-    })
-    add_entity_tile(255, {
-        name = "to room 1",
-        position = vec2(0, 0),
-        room_transition = { target=1, size=vec2(8, 8), exit=vec2(1, 3) },
-        sprite = 0
-    })
-    add_entity_tile(254, {
-        name = "to room 2",
-        position = vec2(0, 0),
-        room_transition = { target=2, size=vec2(8, 8), exit=vec2(16, 3) },
-        sprite = 0
-    })
+    define_entity_tiles()
     
     create_rooms()
     load_room(1)
@@ -136,11 +47,13 @@ function _init()
     init_dialogue()
 
     --> report results
-    printh("there are " .. #all_entities .. " entities")
-    printh("there are " .. #systems .. " systems")
-    printh("there are " .. #gfx_systems .. " gfx systems")
+    -- printh("there are " .. #all_entities .. " entities")
+    -- printh("there are " .. #systems .. " systems")
+    -- printh("there are " .. #gfx_systems .. " gfx systems")
 
     printh("finished init")
+
+    music(11)
 end
 
 function _update()
